@@ -1,0 +1,52 @@
+﻿@model DatabaseDetails
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <form method="post">
+            <input asp-for="ErrorMessage" value="">
+            <input asp-for="SuccessfulConnection" value="false">
+            <!-- Input and Submit elements -->
+            <label asp-for="Server"></label>
+            <input asp-for="Server">
+            <br>
+            <label asp-for="Port"></label>
+            <input asp-for="Port">
+            <br>
+            <label asp-for="DatabaseName"></label>
+            <input asp-for="DatabaseName">
+            <br>
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName">
+            <br>
+            <label asp-for="Password"></label>
+            <input asp-for="Password">
+            <br>
+            <button asp-controller="Home" asp-action="Index">Connect</button>
+        </form>
+        @if (!string.IsNullOrWhiteSpace(Model.Server) && !string.IsNullOrWhiteSpace(Model.DatabaseName))
+        {
+            @if (Model.SuccessfulConnection)
+            {
+                <div>
+                    <h2>Successfully connected to database @Model.DatabaseName</h2>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <h2>Failed to connected to database @Model.DatabaseName</h2>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+                {
+                    <div>
+                        <h4>Error Message</h4>
+                        <p>@Model.ErrorMessage</p>
+                    </div>
+                }
+            }
+        }
+    </div>
